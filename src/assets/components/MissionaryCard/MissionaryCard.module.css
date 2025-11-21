@@ -1,1 +1,55 @@
 
+/* src/components/MissionaryCard/MissionaryCard.module.css */
+.card {
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 16px;
+    margin-bottom: 12px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    background-color: #fff;
+    transition: transform 0.2s;
+}
+
+.card:hover {
+    transform: translateY(-2px);
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 8px;
+}
+
+.name {
+    font-size: 1.25rem;
+    color: #333;
+    font-weight: 600;
+}
+
+.role {
+    color: #666;
+    font-size: 0.9rem;
+}
+
+.flag {
+    font-size: 1.5rem;
+    margin-left: 10px;
+}
+
+.status {
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-size: 0.8rem;
+    font-weight: 500;
+}
+
+.funded {
+    background-color: #d4edda;
+    color: #155724;
+}
+
+.notFunded {
+    background-color: #f8d7da;
+    color: #721c24;
+}
