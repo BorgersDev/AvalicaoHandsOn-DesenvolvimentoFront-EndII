@@ -1,57 +1,56 @@
-import React, { Suspense } from 'react';
-import styles from './App.module.css';
+import React from "react";
+import { 
+  BrowserRouter as Router, 
+  Routes, 
+  Route 
+} from "react-router-dom";
+import { 
+  SignedIn, 
+  SignedOut, 
+  RedirectToSignIn 
+} from "@clerk/clerk-react";
 
-// Importa os Skeletons criados
-import MissionaryListSkeleton from './components/MissionaryList/MissionaryListSkeleton';
-import LetterListSkeleton from './components/LetterList/LetterListSkeleton';
+import HomePage from "./pages/home";
+import OpenPage from "./pages/open";
 
-// PASSO 5: Implementando Lazy Loading
-// O código para estes componentes será dividido em chunks separados 
-// e carregado apenas quando for necessário renderizá-los.
-// Isso melhora a performance, reduzindo o tamanho do bundle inicial 
-// que o navegador precisa carregar para a primeira visualização da página.
-const MissionaryList = React.lazy(() => import('./components/MissionaryList/MissionaryList'));
-const LetterList = React.lazy(() => import('./components/LetterList/LetterList'));
+function App() {
+  return (
+    <Router>
+      <Routes>
+        
+        {/* Rota 1: Raiz (/) - Rota Protegida */}
+        <Route 
+          path="/" 
+          element={
+            <>
+              {/* Se o usuário estiver logado, mostra a HomePage */}
+              <SignedIn>
+                <HomePage />
+              </SignedIn>
+              {/* Se não estiver logado, redireciona para a tela de Login do Clerk */}
+              <SignedOut>
+                <RedirectToSignIn />
+              </SignedOut>
+            </>
+          }
+        />
 
-const App: React.FC = () => {
-    return (
-        <div className={styles.app}>
-            {/* PASSO 1: Header */}
-            <header className={styles.header}>
-                <h1>Dashboard de Missões</h1>
-                <p>Monitoramento de Missionários e Cartas</p>
-            </header>
+        {/* Rota 2: /open - Rota Pública */}
+        <Route path="/open" element={<OpenPage />} />
 
-            {/* PASSO 1: Main Content */}
-            <main className={styles.main}>
-                
-                {/* Seção 1: Missionários */}
-                <section className={styles.section}>
-                    <h2>Missionários em Destaque</h2>
-                    
-                    {/* PASSO 6: Usando Suspense para lidar com o Lazy Loading */}
-                    <Suspense fallback={<MissionaryListSkeleton />}>
-                        <MissionaryList />
-                    </Suspense>
-                </section>
-
-                {/* Seção 2: Cartas */}
-                <section className={styles.section}>
-                    <h2>Últimas Cartas</h2>
-                    
-                    {/* PASSO 6: Usando Suspense para lidar com o Lazy Loading */}
-                    <Suspense fallback={<LetterListSkeleton />}>
-                        <LetterList />
-                    </Suspense>
-                </section>
-            </main>
-
-            {/* PASSO 1: Footer */}
-            <footer className={styles.footer}>
-                &copy; {new Date().getFullYear()} Sistema de Gestão de Missões. Otimizado com React.lazy e Memo.
-            </footer>
-        </div>
-    );
-};
+        {/* Rota 3: Catch-all (*) - Lidar com Rotas Não Encontradas */}
+        {/* Aqui, qualquer rota desconhecida redireciona para o login se não estiver logado */}
+        <Route 
+          path="*" 
+          element={
+            <SignedOut>
+              <RedirectToSignIn />
+            </SignedOut>
+          }
+        />
+      </Routes>
+    </Router>
+  );
+}
 
 export default App;
