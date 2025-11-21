@@ -1,3 +1,4 @@
+// Componente que será carregado de forma assíncrona
 import React, { useEffect, useState } from 'react';
 import LetterCard from '../LetterCard/LetterCard';
 import { Letter, fetchLetters } from '../../data';
@@ -19,6 +20,7 @@ const LetterList: React.FC = () => {
         return <p className={styles.loadingMessage}>Buscando cartas...</p>;
     }
 
+    // PASSO 3: Mostrar um estado vazio amigável quando não houver cartas
     if (letters.length === 0) {
         return (
             <div className={styles.emptyState}>
