@@ -7,6 +7,7 @@ interface LetterCardProps {
     letter: Letter;
 }
 
+// PASSO 4: Implementação de React.memo
 const LetterCard: React.FC<LetterCardProps> = React.memo(({ letter }) => {
     return (
         <div className={styles.card}>
