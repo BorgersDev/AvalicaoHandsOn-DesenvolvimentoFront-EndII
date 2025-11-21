@@ -7,7 +7,10 @@ interface MissionaryCardProps {
     missionary: Missionary;
 }
 
+// Função auxiliar para simular o cálculo pesado da bandeira
+// Geralmente seria uma chamada a uma API ou uma função de processamento de string.
 const getCountryFlag = (countryCode: string): string => {
+    // Simulação de cálculo 'pesado' com switch/case
     switch (countryCode) {
         case 'BR': return '🇧🇷';
         case 'US': return '🇺🇸';
@@ -16,8 +19,12 @@ const getCountryFlag = (countryCode: string): string => {
     }
 };
 
+// PASSO 4: Implementação de React.memo para evitar re-renderizações desnecessárias
+// Se a prop 'missionary' não mudar (shallow comparison), o componente não renderiza.
 const MissionaryCard: React.FC<MissionaryCardProps> = React.memo(({ missionary }) => {
-
+    
+    // PASSO 4: Uso do useMemo em renderizações de cálculos 'pesados'
+    // A bandeira só será recalculada se missionary.country realmente mudar.
     const flag = useMemo(() => getCountryFlag(missionary.country), [missionary.country]);
 
     return (
