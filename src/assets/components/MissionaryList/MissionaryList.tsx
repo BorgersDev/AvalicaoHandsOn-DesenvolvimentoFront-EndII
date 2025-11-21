@@ -1,3 +1,4 @@
+// Componente que será carregado de forma assíncrona
 import React, { useEffect, useState } from 'react';
 import MissionaryCard from '../MissionaryCard/MissionaryCard';
 import { Missionary, fetchMissionaries } from '../../data';
@@ -14,7 +15,9 @@ const MissionaryList: React.FC = () => {
         });
     }, []);
 
+    // PASSO 3: Exibir estado de loading (embora o Suspense já cuide disso na App.tsx)
     if (loading) {
+         // O Skeleton deve ser visto, mas esta lógica interna garante que o dado só aparece quando a promise resolve
         return <p className={styles.loadingMessage}>Carregando dados dos missionários...</p>; 
     }
 
